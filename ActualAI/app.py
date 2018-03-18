@@ -279,7 +279,10 @@ def Get_Colleges2():
       list.append(df.iloc[i,0])
     mainList=[]
     for i in list:
-      mainList.append(GetDetails(i))
+      lk=[]
+      lk=(GetDetails(i));
+      mainList.append(lk);
+      
           
 
     i=labels.index[labels['name'] == perfect].tolist()

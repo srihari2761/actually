@@ -72,6 +72,7 @@ p {
 
 .container:first-child {
   margin-left: 0;
+
 }
 
 
@@ -93,23 +94,35 @@ p {
   transform-style: preserve-3d;
 }
 
+.clghead{
+  font-size: 60px;
+  line-height: 260px;
+   word-wrap: break-word;
+   padding: 10px;
+}
+
 .card.flipped {
   -webkit-transform: rotateY( 180deg );
   -moz-transform: rotateY( 180deg );
   -o-transform: rotateY( 180deg );
   transform: rotateY( 180deg );
 }
-
+.card .front{
+  font-size: 60px;
+  line-height: 260px;
+   word-wrap: break-word;
+   padding: 10px;
+}
 .card .front,
 .card .back {
   display: block;
   height: 100%;
   width: 100%;
-  font-size: 140%;
-  line-height: 260px;
+  
   color: white;
-  word-wrap: break-word;
+ 
   text-align: center;
+  padding: 10px;
  
   position: absolute;
   -webkit-backface-visibility: hidden;
