@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>ActualAI</title>
+    <style type="text/css">
+    /* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+}
+	/* flip the pane when hovered */
+	.flip-container:hover .flipper, .flip-container.hover .flipper {
+		transform: rotateX(180deg);
+	}
+
+.flip-container, .front, .back {
+	width: 320px;
+	height: 480px;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateX(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateX(180deg);
+}
+
+    </style>
+</head>
+<body>
+  <!-- horizontal -->
+  <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+  	<div class="flipper">
+  		<div class="front">
+  			<!-- front content -->
+        <div  style="background-image: url(https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
+           <h1 class="text-shadow">carneige milan</hi>
+        </div>
+
+  		</div>
+  		<div class="back" style="font-color:black">
+  			<!-- back content -->
+
+
+
+          <p>location:</p>
+          <div class="back" style="background-image: url(https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
+          </div>
+</html>
