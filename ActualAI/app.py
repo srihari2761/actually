@@ -21,14 +21,14 @@ app.config['MYSQL_DATABASE_PASSWORD']=''
 app.config['MYSQL_DATABASE_DB']='aidb'
 app.config['MYSQL_DATABASE_HOST']='localhost'
 mysql.init_app(app)
-def list_to_dict(li): 
-     ctt=0 
-     dct = {}  
+def list_to_dict(li):
+     ctt=0
+     dct = {}
      for item in li:
-         
-         dct[ctt]=item 
-         ctt=ctt+1   
-     return dct  
+
+         dct[ctt]=item
+         ctt=ctt+1
+     return dct
 def predict(X_train, y_train, x_test, k):
     # create list for distances and targets
       distances = []
@@ -42,7 +42,7 @@ def predict(X_train, y_train, x_test, k):
 
     # sort the list
       distances = sorted(distances)
-   
+
     # make a list of the k neighbors' targets
       i=0
       while len(list(set(targets)))<k:
@@ -50,7 +50,7 @@ def predict(X_train, y_train, x_test, k):
         val=y_train[index]
         i=i+1
         targets.append(val)
-  
+
       return list(set(targets))
 
 
@@ -62,13 +62,13 @@ def idgen():
             conn=mysql.connect()
             cursor=conn.cursor()
     except Exception as e:
-            return{'error':str(e)} 
+            return{'error':str(e)}
 
     id=randint(0, 1000)
     select_stmt=("SELECT * FROM patient WHERE id=%s")
     select_data=(id)
             #cursor.callproc('spCreatePatient',(_userName,_userPassword,111,_userSex,_userAge,_userAddress,_userPhone,_userWard,_userDate))
-            #cursor.execute(    "INSERT INTO patient VALUES ('"+'1'+"','"+_user))   
+            #cursor.execute(    "INSERT INTO patient VALUES ('"+'1'+"','"+_user))
     cursor.execute(select_stmt,select_data)
             #data=cursor.fetchone()
     data=cursor.fetchall()
@@ -93,7 +93,7 @@ def Log_In():
       pid=0
       message="login failed! try again"
       return render_template('login_fail.html',**locals())
-  else:    
+  else:
       return render_template('run.html',**locals())
 
 @app.route('/SignUp',methods=['POST'])
@@ -109,20 +109,20 @@ def Sign_Up():
   checkd=cursor.fetchall()
   if len(checkd)>0:
         return render_template('login_fail.html',message='name already exists')
-  else:    
+  else:
             insert_stmt=("INSERT INTO users VALUES (%s,%s)")
             insert_data=(email,password)
-              
+
             cursor.execute(insert_stmt,insert_data)
-          
-            data=cursor.fetchall() 
+
+            data=cursor.fetchall()
             if len(data) is 0:
                 conn.commit()
                 return render_template('run.html',**locals())
             else:
                 message="login failed! try again"
-                return render_template('login_fail.html',**locals())           
-          
+                return render_template('login_fail.html',**locals())
+
 
 
 @app.route('/GetColleges', methods=['POST'])
@@ -150,27 +150,27 @@ def Get_Colleges():
     labelVal=labels.values.ravel()
     labelVal=labelVal.astype('int')
 
-   
+
     list=[]
     Xt=([gre,lang,gpa])
-    fin=predict(X,labelVal,Xt,8)
+    fin=predict(X,labelVal,Xt,7)
    # ovo=OneVsOneClassifier(LinearSVC(random_state=0)).fit(X, labelVal)
     filename = 'finalized_model.sav'
     ovo = pickle.load(open(filename, 'rb'))
-    
+
     perfect=ovo.predict([[gre,lang,gpa]])
     perfect=perfect[0]
     if perfect in fin:
       fin.remove(perfect)
-  
-   
+
+
     for op in fin:
       i=labels.index[labels['name'] == op].tolist()
       i=i[0]
       list.append(df.iloc[i,0])
-   
+
     i=labels.index[labels['name'] == perfect].tolist()
-    i=i[0]  
+    i=i[0]
     perfect=df.iloc[i,0]
 
   #  dict=list_to_dict(list)
@@ -185,7 +185,7 @@ def Get_Colleges2():
         gre=request.form['gre']
         lang=request.form['lang']
         exp=request.form['exp']
-    
+
     gpa=int(float(gpa))
     gre=int(float(gre))
     lang=int(float(lang))
@@ -205,28 +205,28 @@ def Get_Colleges2():
     labelVal=labels.values.ravel()
     labelVal=labelVal.astype('int')
 
-   
+
     list=[]
     Xt=([gre,lang,gpa,exp])
-    fin=predict(X,labelVal,Xt,8)
+    fin=predict(X,labelVal,Xt,7)
    # ovo=OneVsOneClassifier(LinearSVC(random_state=0)).fit(X, labelVal)
     filename = 'fimo2.sav'
     ovo = pickle.load(open(filename, 'rb'))
-    
+
     perfect=ovo.predict([[gre,lang,gpa,exp]])
     perfect=perfect[0]
     if perfect in fin:
-     
+
       fin.remove(perfect)
-  
-   
+
+
     for op in fin:
       i=labels.index[labels['name'] == op].tolist()
       i=i[0]
       list.append(df.iloc[i,0])
-   
+
     i=labels.index[labels['name'] == perfect].tolist()
-    i=i[0]  
+    i=i[0]
     perfect=df.iloc[i,0]
 
   #  dict=list_to_dict(list)
@@ -241,4 +241,3 @@ def Get_Colleges2():
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
-                
