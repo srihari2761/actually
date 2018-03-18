@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>ActualAI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="static/index.css">
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+
+body, html {
+
+
+}
+
+#particles-js{
+  	width: 100%;
+  	height: 100%;
+  	background-size: cover;
+  	background-position: 100% 100%;
+  	position: fixed;
+  	top: 0px;
+  	z-index:1;
+}
+
+
+
+@import 'https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400';
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100%;
+    background-repeat: no-repeat;    /*background-image: linear-gradient(rgb(12, 97, 33),rgb(104, 145, 162));*/
+    background:black;
+}
+
+.container{
+    position:absolute;
+    width: auto;
+    height:auto;
+    top: calc(50% - 240px);
+    left: calc(50% - 160px);
+}
+
+form {
+    position: absolute;
+    text-align: center;
+    background: #fff;
+    width: 410px;
+    height: 570px;
+    border-radius: 5px;
+    padding: 30px 20px 0 20px;
+    box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #2d2c2a;
+    margin-bottom: 40px;
+}
+
+p > span {
+    padding-top: 3px;
+    display: block;
+    font-weight: 400;
+    font-size: 9px;
+}
+
+h3 {
+    font-family: 'Dosis';
+    font-size: 35px;
+    text-transform: uppercase;
+    color: #2d2c2a;
+    margin-bottom: 30px;
+}
+
+input,
+button{
+    outline: none !important;
+}
+
+
+button.fb:hover {
+    background: #fff;
+    color: black;
+}
+
+button.form-btn {
+    position: absolute;
+    width: 50%;
+    height: 60px;
+    bottom: 0;
+    border: 0;
+    font-family: 'Dosis';
+    font-size: 24px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+button.form-btn.sx {
+    left: 0;
+    border-radius: 0 0 0 5px;
+    background-color:#2d2c2a;
+    color: #fff;
+    transition:all 0.3s linear;
+}
+
+button.form-btn.sx:hover {
+    background-color:#2d2c2a;
+    color: #fff;
+}
+
+button.form-btn.sx.back {
+    background-color: #2d2c2a;
+    transition:all 0.3s linear;
+}
+
+button.form-btn.sx.back:hover {
+    background-color: #2d2c2a;
+}
+
+button.form-btn.dx {
+    right: 0;
+    border-radius: 0 0 5px 0;
+    background-color: #2d2c2a;
+    color: #fff;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid #2d2c2a;
+    width: 85%;
+    font-family: 'Roboto';
+    color: #2d2c2a;
+    text-align: center;
+    font-size: 21px;
+    font-weight:100;
+    margin-bottom:25px;
+}
+
+::-webkit-input-placeholder {
+   color: #2d2c2a;
+    font-family: 'Roboto';
+    font-weight:100;
+}
+
+:-moz-placeholder {
+   color: #2d2c2a;
+    font-family: 'Roboto';
+    font-weight:100;
+}
+
+::-moz-placeholder {
+   color: #2d2c2a;
+    font-family: 'Roboto';
+    font-weight:100;
+}
+
+:-ms-input-placeholder {
+   color: #2d2c2a;
+    font-family: 'Roboto';
+    font-weight:100;
+}
+
+.resource input,
+.gre .w100 {
+    width: 100%;
+}
+
+.resource{
+        z-index: 1;
+        transform: perspective(100px) translate3d(100px, 0px, -30px);
+        opacity: 0.5;
+}
+
+.gre {
+    z-index: 2;
+}
+
+.active-dx{
+    animation-name: foregrounding-dx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+.active-sx{
+    animation-name: foregrounding-sx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+.inactive-dx{
+    animation-name: overshadowing-dx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+.inactive-sx{
+    animation-name: overshadowing-sx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes overshadowing-dx {
+    0%{
+        z-index:2;
+        transform: perspective(100px) translate3d(0px, 0px, 0px);
+        opacity: 1;
+        box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
+    }
+    100%{
+        z-index: 1;
+        transform: perspective(100px) translate3d(100px, 0px, -30px);
+        opacity: 0.5;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+    }
+}
+
+@keyframes overshadowing-sx {
+    0%{
+        z-index:2;
+        transform: perspective(100px) translate3d(0px, 0px, 0px);
+        opacity: 1;
+        box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
+    }
+    100%{
+        z-index: 1;
+        transform: perspective(100px) translate3d(-100px, 0px, -30px);
+        opacity: 0.5;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+    }
+}
+
+@keyframes foregrounding-dx {
+    0%{
+        z-index:1;
+        transform: perspective(100px) translate3d(100px, 0px, -30px);
+        opacity: 0.5;
+    }
+    50%{
+        z-index:2;
+        transform: perspective(100px) translate3d(400px, 0px, -30px);
+    }
+    100%{
+        z-index:2;
+        transform: perspective(100px) translate3d(0px, 0px, 0px);
+        opacity: 1;
+    }
+}
+
+@keyframes foregrounding-sx {
+    0%{
+        z-index:1;
+        transform: perspective(100px) translate3d(-100px, 0px, -30px);
+        opacity: 0.5;
+    }
+    50%{
+        z-index:2;
+        transform: perspective(100px) translate3d(-400px, 0px, -30px);
+    }
+    100%{
+        z-index:2;
+        transform: perspective(100px) translate3d(0px, 0px, 0px);
+        opacity: 1;
+    }
+}
+RERUN
+
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<img src="static/AI.png" style="align-self:left; width:20%; margin:30px;padding:left:">
+<p style="align-self:left; width:100%;  margin:30,40px;padding:left;font-size: 50px;color:#fff">ACTUAL.ai</p>
+<div id="particles-js"></div>
+<div class="container">
+
+	<div id="login-box">
+		<div class="logo">
+            <form class="gre", method="post", enctype="multipart/form-data", action="/GetColleges">
+         <h3> college AI</h3>
+         <p>Just enter your GRE score </br>
+ and your Toefl/Ielts scores to find the most optimal college with compromise.
+         </p>
+         <input class="w100" name="gre" type="number" placeholder="Insert GRE score" reqired min="270" max="320"/>
+         <input type="number" name="lang" placeholder="Insert LANGUAGE score(IELTS/TOEFL)" reqired min="1" max="100"/>
+         <input type="number" name="gpa" placeholder="Insert CGPA/PERCENTILE" reqired min="1" max="100"/>
+         <button class="form-btn sx log-in" type="button">Resource AI</button>
+         <button class="form-btn dx" type="submit">FIND</button>
+     </form>
+     <form class="resource", , method="post", enctype="multipart/form-data", action="/GetColleges2">
+         <h3>Welcome</br>enter details for RESOURCE AI</h3>
+        <input class="w100" name="gre" type="number" placeholder="Insert GRE score"  min="270" max="320"/>
+         <input type="number" name="lang" placeholder="Insert LANGUAGE score(IELTS/TOEFL)" reqired min="1" max="100"/>
+         <input type="number" name="gpa" placeholder="Insert CGPA/PERCENTILE" reqired min="1" max="100"/>
+         <input type="number" name="exp" placeholder="Insert Your Optimal Budget(finances)" reqired min="10000" max="100000"/>
+         <button class="form-btn sx back" type="button">College AI</button>
+         <button class="form-btn dx" type="submit">FIND</button>
+     </form></div><!-- /.container -->
+
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>-->
+<script type="text/javascript">
+$.getScript("https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js", function(){
+    particlesJS('particles-js',
+      {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#ffffff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            },
+            "image": {
+              "width": 100,
+              "height": 100
+            }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": false,
+            "anim": {
+              "enable": false,
+              "speed": 1,
+              "opacity_min": 0.1,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 5,
+            "random": true,
+            "anim": {
+              "enable": false,
+              "speed": 40,
+              "size_min": 0.1,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 6,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out",
+            "attract": {
+              "enable": false,
+              "rotateX": 600,
+              "rotateY": 1200
+            }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,
+              "mode": "repulse"
+            },
+            "onclick": {
+              "enable": true,
+              "mode": "push"
+            },
+            "resize": true
+          },
+          "modes": {
+            "grab": {
+              "distance": 400,
+              "line_linked": {
+                "opacity": 1
+              }
+            },
+            "bubble": {
+              "distance": 400,
+              "size": 40,
+              "duration": 2,
+              "opacity": 8,
+              "speed": 3
+            },
+            "repulse": {
+              "distance": 200
+            },
+            "push": {
+              "particles_nb": 4
+            },
+            "remove": {
+              "particles_nb": 2
+            }
+          }
+        },
+        "retina_detect": true,
+        "config_demo": {
+          "hide_card": false,
+          "background_color": "#b61924",
+          "background_image": "",
+          "background_position": "100% 100%",
+          "background_repeat": "no-repeat",
+          "background_size": "contain"
+        }
+      }
+    );
+
+});
+$(".log-in").click(function(){
+    $(".resource").addClass("active-dx");
+    $(".gre").addClass("inactive-sx");
+    $(".gre").removeClass("active-sx");
+    $(".resource").removeClass("inactive-dx");
+});
+
+$(".back").click(function(){
+    $(".gre").addClass("active-sx");
+    $(".resource").addClass("inactive-dx");
+    $(".resource").removeClass("active-dx");
+    $(".gre").removeClass("inactive-sx");
+});
+RERUN
+
+
+
+
+
+</script>
+</body>
+</html>
