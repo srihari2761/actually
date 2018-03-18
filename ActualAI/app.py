@@ -9,6 +9,9 @@ import numpy as np
 from sklearn.multiclass import OneVsOneClassifier
 from sklearn.svm import LinearSVC
 import pickle
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+from keras.models import load_model
 
 app=Flask(__name__,static_url_path="/static")
 app.secret_key='ironman'
@@ -21,6 +24,10 @@ app.config['MYSQL_DATABASE_PASSWORD']=''
 app.config['MYSQL_DATABASE_DB']='aidb'
 app.config['MYSQL_DATABASE_HOST']='localhost'
 mysql.init_app(app)
+
+
+
+
 def list_to_dict(li):
      ctt=0
      dct = {}
@@ -29,6 +36,19 @@ def list_to_dict(li):
          dct[ctt]=item
          ctt=ctt+1
      return dct
+def GetDetails(clg):
+  conn=mysql.connect()
+  cursor=conn.cursor()
+  print("**"+clg+"***")
+  check_stmt=("SELECT * FROM collegetable WHERE collegeName=%s")
+  check_data=(clg)
+
+  cursor.execute(check_stmt,check_data)
+  #cursor.execute(check_stmt)
+  data=cursor.fetchall()
+  print(data)
+  print(list(data))
+  return list(data)     
 def predict(X_train, y_train, x_test, k):
     # create list for distances and targets
       distances = []
@@ -52,6 +72,33 @@ def predict(X_train, y_train, x_test, k):
         targets.append(val)
 
       return list(set(targets))
+
+@app.route('/Sopinp')
+def Sopinp():
+  return render_template('/SOPinp.html')
+@app.route('/SOP',methods=['POST'])
+def SOP():
+  print("working??")
+  if request.method=='POST':
+    input=request.form['input']
+  list_sentences_train=np.load('123.npy')
+  print("THIS IS INPUT"+input)
+  list_sentences_test=np.array([input])
+  list_sentences_test.size
+  maxlen=100
+  max_features = 15352 # how many unique words to use (i.e num rows in embedding vector)
+  tokenizer = Tokenizer(num_words=max_features)
+  tokenizer.fit_on_texts(list(list_sentences_train))
+  list_tokenized_train = tokenizer.texts_to_sequences(list_sentences_train)
+  list_tokenized_test = tokenizer.texts_to_sequences(list_sentences_test)
+  X_te = pad_sequences(list_tokenized_test, maxlen=maxlen)
+  model = load_model('my_model.h5')
+  y_test = model.predict([X_te], batch_size=1024, verbose=1)
+  y_classes = y_test.argmax(axis=-1)
+  op=y_classes[0]
+
+  return render_template("Sop.html",**locals())
+
 
 
 @app.route("/")
@@ -168,10 +215,16 @@ def Get_Colleges():
       i=labels.index[labels['name'] == op].tolist()
       i=i[0]
       list.append(df.iloc[i,0])
-
+    mainList=[]
+    for i in list:
+      lk=[]
+      lk=(GetDetails(i));
+      mainList.append(lk);
+    #print("mainList"+mainList)
     i=labels.index[labels['name'] == perfect].tolist()
     i=i[0]
     perfect=df.iloc[i,0]
+    mainPerfect=GetDetails(perfect)
 
   #  dict=list_to_dict(list)
   #  dict.update({'perfect':df.iloc[i,0]})
@@ -224,10 +277,15 @@ def Get_Colleges2():
       i=labels.index[labels['name'] == op].tolist()
       i=i[0]
       list.append(df.iloc[i,0])
+    mainList=[]
+    for i in list:
+      mainList.append(GetDetails(i))
+          
 
     i=labels.index[labels['name'] == perfect].tolist()
     i=i[0]
     perfect=df.iloc[i,0]
+    mainPerfect=GetDetails(perfect)
 
   #  dict=list_to_dict(list)
   #  dict.update({'perfect':df.iloc[i,0]})
