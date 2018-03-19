@@ -81,7 +81,36 @@ def SOP():
   print("working??")
   if request.method=='POST':
     input=request.form['input']
+    clgmain=request.form['main']
+    clg1=request.form['clg1']
+    print("\nclg1==="+clg1)
+    clg2=request.form['clg2']
+    print("\nclg2==="+clg2)
+    clg3=request.form['clg3']
+    print("\nclg3==="+clg3)
+    clg4=request.form['clg4']
+    clg5=request.form['clg5']
+    clg6=request.form['clg6']
+    uInput=request.form['userInput']
+    userInput=float(uInput)
+    print("check 2")
+    perfect=clgmain
+    #perfect.append(clgmain)
+    alist=[]
+    alist.append(clg1)
+    alist.append(clg2)
+    alist.append(clg3)
+    alist.append(clg4)
+    alist.append(clg5)
+    alist.append(clg6)
+
+
+
+
+    
+
   list_sentences_train=np.load('123.npy')
+  print("npload==="+list_sentences_train)
   print("THIS IS INPUT"+input)
   list_sentences_test=np.array([input])
   list_sentences_test.size
@@ -96,6 +125,23 @@ def SOP():
   y_test = model.predict([X_te], batch_size=1024, verbose=1)
   y_classes = y_test.argmax(axis=-1)
   op=y_classes[0]
+  print(op)
+  mainPerfect=GetDetails(perfect)
+  print("main===="+mainPerfect[0][5])
+  num=userInput/(float(mainPerfect[0][5]))
+  num=num*100
+  mainPerfect.append(num)
+  print((((float(mainPerfect[0][5])/userInput)*100)+((mainPerfect[0][6]/op)*100))/2)
+  mainPerfect.append(((userInput/(float(mainPerfect[0][5]))*100)+((op/mainPerfect[0][6])*100))/2)
+  mainList=[]
+  for i in alist:
+      lk=[]
+      lk=(GetDetails(i));
+      print(lk)
+      lk.append(userInput/(float(lk[0][5]))*100)
+      lk.append(((userInput/(float(lk[0][5]))*100)+((op/lk[0][6])*100))/2)
+      print(lk)
+      mainList.append(lk);
 
   return render_template("Sop.html",**locals())
 
@@ -171,19 +217,25 @@ def Sign_Up():
                 return render_template('login_fail.html',**locals())
 
 
-
 @app.route('/GetColleges', methods=['POST'])
 def Get_Colleges():
     if request.method=='POST':
         gpa=request.form['gpa']
         gre=request.form['gre']
         lang=request.form['lang']
+
+
+
     c=0
     gpa=int(float(gpa))
     gre=int(float(gre))
     lang=int(float(lang))
 
-    df = pd.read_csv("gredataset.csv")
+    userInput=((gre*100/340)+gpa+lang)/3
+    
+
+
+    df = pd.read_csv("gredatasetmain.csv")
     X=df.iloc[:,[1,2,3]]
     labels=df.iloc[:,[0]]
 
@@ -209,8 +261,9 @@ def Get_Colleges():
     perfect=perfect[0]
     if perfect in fin:
       fin.remove(perfect)
-
-
+    print(perfect)
+    print(labels['name'])
+    print(fin)
     for op in fin:
       i=labels.index[labels['name'] == op].tolist()
       i=i[0]
@@ -219,12 +272,16 @@ def Get_Colleges():
     for i in list:
       lk=[]
       lk=(GetDetails(i));
+      lk.append((userInput/(float(lk[0][5])))*100)
+      print(lk)
       mainList.append(lk);
     #print("mainList"+mainList)
     i=labels.index[labels['name'] == perfect].tolist()
+    print(i)
     i=i[0]
     perfect=df.iloc[i,0]
     mainPerfect=GetDetails(perfect)
+    mainPerfect.append(userInput/(float(mainPerfect[0][5]))*100)
 
   #  dict=list_to_dict(list)
   #  dict.update({'perfect':df.iloc[i,0]})
@@ -238,6 +295,7 @@ def Get_Colleges2():
         gre=request.form['gre']
         lang=request.form['lang']
         exp=request.form['exp']
+       # input=request.form['input']
 
     gpa=int(float(gpa))
     gre=int(float(gre))
@@ -281,6 +339,7 @@ def Get_Colleges2():
     for i in list:
       lk=[]
       lk=(GetDetails(i));
+     # lk.append((float(lk[0][5])/userInput)*100)
       mainList.append(lk);
       
           
@@ -289,6 +348,7 @@ def Get_Colleges2():
     i=i[0]
     perfect=df.iloc[i,0]
     mainPerfect=GetDetails(perfect)
+   # mainPerfect.append((float(mainPerfect[0][5])/userInput)*100)
 
   #  dict=list_to_dict(list)
   #  dict.update({'perfect':df.iloc[i,0]})
